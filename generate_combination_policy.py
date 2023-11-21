@@ -27,7 +27,9 @@ def generate_combination_policy(Adjacency, b, type='uniform'):
     # np.ones((1, N)).dot(Combination_Matrix)  # result is all ones for left-stochastic
     # np.transpose(Combination_Matrix).dot(np.ones((N, 1)))  # result is all ones for doubly stochastic
     # Finding the Perron eigenvector
-    V, D = np.linalg.eig(Combination_Matrix)  # eigenvalue decomposition
+    D, V = np.linalg.eig(Combination_Matrix)  # eigenvalue decomposition
+    ##DEBUG: Order of return for eigenvalues and eigenvectors
+    
     idx = np.argmax(np.abs(np.diag(D)))  # returns index of maximum magnitude eigenvalue of A, which is the eigenvalue at one.
     p = V[:, idx]  # extracting the corresponding eigenvector
     p = p / np.sum(p)  # normalizing the sum of its entries to one

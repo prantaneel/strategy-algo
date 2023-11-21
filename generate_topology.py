@@ -71,16 +71,3 @@ def plot_topology(Adjacency, Coordinates, Color):
     for k in range(N):
         plt.text(x_coordinates[k] + 0.03, y_coordinates[k] + 0.03, str(k), fontsize=7)
     
-    plt.show()
-
-
-
-    
-algebraic_connectivity = 0;
-while algebraic_connectivity < 1e-4:
-   adjacency,laplacian,algebraic_connectivity,degree,coordinates = generate_topology(20,0.3)
-
-color = np.zeros(20)
-plot_topology(adjacency, coordinates, color)
-
-

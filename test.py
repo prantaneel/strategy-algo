@@ -8,9 +8,10 @@ Initialisation with all the values being zero
 
 
 import numpy as np
-
+import tqdm
 x = np.ones((2, 1))
 y = np.ones((2, 3))
 x_coordinates = np.random.rand(1, 10) + 0.1
-x[1] = 2
-print(np.random.randn(10, 1)) 
+a = np.ones((1, 10))
+b = np.ones((10, 1))
+print(a.dot(b))
