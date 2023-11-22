@@ -223,36 +223,36 @@ for L in range(Num_trial):
             #central solution uses mu_max/N as step-size
             sum_W_gradients = sum_W_gradients + (2/h)*mu_max*p[k]*np.dot(uk.conj().T, (dk - np.dot(uk, w_WCEN)))
            
-    w_CEN = w_CEN + sum_gradients
-    tilde_w_CEN = wo - w_CEN
-    
-    MSD_CEN[i] = MSD_CEN[i] + (np.linalg.norm(tilde_w_CEN, 2))**2
-    
-    w_WCEN = w_WCEN + sum_W_gradients
-    tilde_w_CEN = wo - w_WCEN
-    
-    MSD_WCEN[i] = MSD_WCEN[i] + (np.linalg.norm(tilde_w_WCEN, 2))**2
-    
-    for k in range(N):
-        w[:, k] = np.zeros(M)
-        for l in range(N):
-            w[:, k] = w[:, k] + A[l, k]*psi[:, l]
+        w_CEN = w_CEN + sum_gradients
+        tilde_w_CEN = wo - w_CEN
         
-        #ATC      
-        tilde_w[:, k] = w_star.flatten()- w[:, k]
-        MSD_agent[k, i] = MSD_agent[k, i] + (np.linalg.norm(tilde_w[:, k], 2))**2
+        MSD_CEN[i] = MSD_CEN[i] + (np.linalg.norm(tilde_w_CEN, 2))**2
         
-        #CTA
-        tilde_w_CTA[:, k] = w_star.flatten() - w_CTA[:, k]
-        MSD_agent_CTA[k, i] = MSD_agent_CTA[k, i] + (np.linalg.norm(tilde_w_CTA[:, k], 2))**2
+        w_WCEN = w_WCEN + sum_W_gradients
+        tilde_w_CEN = wo - w_WCEN
         
-        #Consensus
-        tilde_w_CTA[:, k] = w_star.flatten() - w_CON[:, k]
-        MSD_agent_CON[k, i] = MSD_agent_CON[k, i] + (np.linalg.norm(tilde_w_CON[:, k], 2))**2
+        MSD_WCEN[i] = MSD_WCEN[i] + (np.linalg.norm(tilde_w_WCEN, 2))**2
         
-        #Non-coop
-        tilde_w_NCOP[:, k] = wo.flatten() - w_NCOP[:, k]
-        MSD_agent_NCOP[k, i] = MSD_agent_NCOP[k, i] + (np.linalg.norm(tilde_w_NCOP[:, k], 2))**2
+        for k in range(N):
+            w[:, k] = np.zeros(M)
+            for l in range(N):
+                w[:, k] = w[:, k] + A[l, k]*psi[:, l]
+            
+            #ATC      
+            tilde_w[:, k] = w_star.flatten()- w[:, k]
+            MSD_agent[k, i] = MSD_agent[k, i] + (np.linalg.norm(tilde_w[:, k], 2))**2
+            
+            #CTA
+            tilde_w_CTA[:, k] = w_star.flatten() - w_CTA[:, k]
+            MSD_agent_CTA[k, i] = MSD_agent_CTA[k, i] + (np.linalg.norm(tilde_w_CTA[:, k], 2))**2
+            
+            #Consensus
+            tilde_w_CON[:, k] = w_star.flatten() - w_CON[:, k]
+            MSD_agent_CON[k, i] = MSD_agent_CON[k, i] + (np.linalg.norm(tilde_w_CON[:, k], 2))**2
+            
+            #Non-coop
+            tilde_w_NCOP[:, k] = wo.flatten() - w_NCOP[:, k]
+            MSD_agent_NCOP[k, i] = MSD_agent_NCOP[k, i] + (np.linalg.norm(tilde_w_NCOP[:, k], 2))**2
 
 # ATC network learning curve
 MSD_agent = MSD_agent / Num_trial  # each row contains the MSD evolution of the corresponding agent

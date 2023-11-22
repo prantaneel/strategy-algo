@@ -29,8 +29,9 @@ def generate_combination_policy(Adjacency, b, type='uniform'):
     # Finding the Perron eigenvector
     D, V = np.linalg.eig(Combination_Matrix)  # eigenvalue decomposition
     ##DEBUG: Order of return for eigenvalues and eigenvectors
-    
+    print(np.abs(np.diag(D)))
     idx = np.argmax(np.abs(np.diag(D)))  # returns index of maximum magnitude eigenvalue of A, which is the eigenvalue at one.
+    idx = idx//N
     p = V[:, idx]  # extracting the corresponding eigenvector
     p = p / np.sum(p)  # normalizing the sum of its entries to one
     p_Vector = p  # Perron eigenvector
