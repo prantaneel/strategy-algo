@@ -35,8 +35,6 @@ def generate_topology(N, parameter):
     sigma = np.linalg.svd(L)[1] # vector of singular values of L.
     Laplacian = L #Laplacian matrix
     Algebraic_Connectivity = sigma[N-2] # algebraic connectivity
-    if np.sum(sigma[:-1]) < 1e-4:
-        return
     
     return Adjacency, Laplacian, Algebraic_Connectivity, Degree_Vector, Coordinates
 
@@ -70,4 +68,10 @@ def plot_topology(Adjacency, Coordinates, Color):
 
     for k in range(N):
         plt.text(x_coordinates[k] + 0.03, y_coordinates[k] + 0.03, str(k), fontsize=7)
-    
+
+
+# algebraic_connectivity = 0
+# while algebraic_connectivity < 1e-4:
+#     adjacency,laplacian,algebraic_connectivity,degree,coordinates = generate_topology(5, 0.3)
+
+# print(adjacency,laplacian,algebraic_connectivity,degree,coordinates)

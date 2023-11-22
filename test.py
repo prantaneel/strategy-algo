@@ -1,17 +1,19 @@
-'''
-Node vector is a regressor vector considering the past w_opt values
-u(t), u(t-1), u(t-2), ...
-Initialisation with all the values being zero
-
-
-'''
-
-
 import numpy as np
-import tqdm
-x = np.ones((2, 1))
-y = np.ones((2, 3))
-x_coordinates = np.random.rand(1, 10) + 0.1
-a = np.ones((1, 10))
-b = np.ones((10, 1))
-print(a.dot(b))
+import scipy as sc
+
+# Define a 2D matrix
+matrix = np.array([[1, 2, 3], [4, 5, 6]])
+
+# Define a 1D array
+array = np.array([2, 3, 4])
+
+# Perform matrix multiplication using numpy.dot
+result = matrix.dot(array)
+H = []
+x = np.matrix([[1, 2], [3, 4]])
+for k in range(5):
+    if k == 0:
+        H = sc.linalg.block_diag(x)
+    else:
+        H = sc.linalg.block_diag(H, x)
+print(H)
