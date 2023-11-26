@@ -8,7 +8,7 @@ from generate_combination_policy import *
 Only distributed learning so same_model = 0
 """
 h = 1 #only for real data change to 2 for complex data
-
+plt.rcParams['figure.figsize'] = (12, 12)
 uniform_step = 1
 
 same_model = 0
@@ -21,10 +21,10 @@ uniform_reg = 1
 """
 mu_max = 0.001 #max step-size param used for adapting
 
-N = 5 #number of agents in the network
-M = 3 #size of the wo, which is Mx1
-Num_iter = 100 #number of iterations per experiment
-Num_trial = 10 #number of experiments
+N = 10 #number of agents in the network
+M = 8 #size of the wo, which is Mx1
+Num_iter = 2000 #number of iterations per experiment
+Num_trial = 100 #number of experiments
 
 type_policy = 'uniform'
 
@@ -111,6 +111,7 @@ while algebraic_connectivity < 1e-4:
 
 color = np.zeros((N, 1))
 plot_topology(adjacency, coordinates, color)
+plt.savefig('node_topology.png')
 A, p = generate_combination_policy(adjacency, b, type_policy)
 #A is combination policy, p is its Perron eigenvector
 
@@ -229,7 +230,7 @@ for L in range(Num_trial):
         MSD_CEN[i] = MSD_CEN[i] + (np.linalg.norm(tilde_w_CEN, 2))**2
         
         w_WCEN = w_WCEN + sum_W_gradients
-        tilde_w_CEN = wo - w_WCEN
+        tilde_w_WCEN = wo - w_WCEN
         
         MSD_WCEN[i] = MSD_WCEN[i] + (np.linalg.norm(tilde_w_WCEN, 2))**2
         
@@ -437,7 +438,6 @@ MSD_thy_db_CON = 10*np.log10(MSD_thy_CON)
 #############################################
 # Generating figures
 #############################################   
-
 if same_model == 1: # when all agents have the same model wo, we plot curves for ATC, CTA, consensus, non-cooperative, and centralized
     
     # distributed solutions
@@ -489,20 +489,22 @@ else: # different models w_k^o; in this case, it is not meaningful to plot the n
     plt.ylabel('MSD(dist, av) (dB)', fontsize=12)
     plt.axis([0, Num_iter, -60, 0])
     plt.legend(['ATC', 'CTA', 'consensus', 'theory small \mu', 'theory ATC', 'theory CTA', 'theory consensus'])
+    plt.savefig('MSD_plot.png')
     
 plt.figure() # regression power and noise power
-plt.subplot(221)
+plt.subplot(211)
 plt.plot(np.arange(1, N+1), 10*np.log10(trace_values), '-o', linewidth=1, markersize=4, markeredgecolor='k', markerfacecolor='g')
 plt.grid(True)
 plt.xlabel('k (index of node)', fontsize=10)
 plt.ylabel('R[u, k] (dB)', fontsize=10)
-plt.axis([1, N, 9, 13])
+plt.axis([1, N, 0, 20])
 plt.title('power of regression data', fontsize=12)
-plt.subplot(222)
+plt.subplot(212)
 plt.plot(np.arange(1, N+1), 10*np.log10(sigma_v2), '-o', linewidth=1, markersize=4, markeredgecolor='k', markerfacecolor='r')
 plt.grid(True)
 plt.xlabel('k (index of node)', fontsize=10)
 plt.ylabel('sigma[v, k]^2 (dB)', fontsize=10)
 plt.axis([1, N, -25, -15])
 plt.title('noise power', fontsize=12)
+plt.savefig('noise_power_plot.png')
 plt.show()
